@@ -1,7 +1,18 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:oms_app/common_repo/common_api_repo.dart';
+import 'package:oms_app/resuources/api_urls.dart';
+import 'package:oms_app/screens/category/sub_%20category_list.dart';
+import '../../models/allcategory_model.dart';
+import '../../resuources/app_colors.dart';
+import '../../resuources/custom_loader.dart';
+import '../../resuources/navigate_with_bottombar.dart';
 import '../componant_screens/add_height_widtth.dart';
+import 'category_product.dart';
 import 'component/plus_minus_component.dart';
 
 class AllCategoriesList extends StatefulWidget {
@@ -13,6 +24,8 @@ class AllCategoriesList extends StatefulWidget {
 
 class _AllCategoriesListState extends State<AllCategoriesList> {
 bool addButtonCliked = false;
+var catImgUrl = "https://oms.siddharthinfosys.com/public/categories/";
+
 
   int counter = 1;
   increaseCounter() {
@@ -28,17 +41,33 @@ bool addButtonCliked = false;
     }
     setState(() {});
   }
+
+  Repositories repositories = Repositories();
+    AllCategoryModel? allCategoryModel;
+  
+  getALlCatList() async{
+    repositories.getApi(url: ApiUrls.allCategoryList).then((value){
+        allCategoryModel = AllCategoryModel.fromJson(jsonDecode(value));
+        setState(() {});
+    });
+  }
+  @override
+  void initState() {
+    super.initState();
+    getALlCatList();
+  }
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       // appBar: backAppBar1("Categories", context),
       body:
+          allCategoryModel != null  ?
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 5),
         child: CustomScrollView(
           slivers: [
-          
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
               sliver: SliverGrid(
@@ -46,17 +75,29 @@ bool addButtonCliked = false;
                   crossAxisCount: 3,
                   childAspectRatio: 0.5,
                   crossAxisSpacing: 5.0,
-                  mainAxisSpacing: 0.0,
+                  mainAxisSpacing: 5.0,
                   mainAxisExtent: 115,
                 ),
                 delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
+                        final cateListData = allCategoryModel!.categories![index];
                     return GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        log("CATEGORY ID: ${cateListData.id.toString()}");
+                        if(allCategoryModel!.products == null || allCategoryModel!.products!.isEmpty){
+                          pushScreen(context, screen: SubCategoriesList(categoryId: cateListData.id.toString(), categoryName: cateListData.category.toString(),),withNavBar: true);
+
+                          // Get.to(()=>SubCategoriesList(categoryId: cateListData.id.toString(), categoryName: cateListData.category.toString(),));
+                        }else{
+                          Get.to(()=>CategoryProducts(categoryId: cateListData.id.toString(), categoryName: cateListData.category.toString(),));
+
+                        }
+                      },
                       child: Container(
+                        // margin: EdgeInsets.symmetric(vertical: 3),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          color: Colors.white,
+                          color: Colors.grey.shade100,
                         ),
                         child: Center(
 
@@ -66,14 +107,27 @@ bool addButtonCliked = false;
                               addHeight(10),
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
-                                child: Image.asset("assets/images/demo.png", height: 80),
+                                child:
+                                CachedNetworkImage(
+                                  imageUrl: catImgUrl +
+                                      cateListData.mobileimage.toString(),
+                                  fit: BoxFit.contain,
+                                  // height: height*.47,
+                                  height: 80,
+                                  width: 80,
+                                  errorWidget: (_, __, ___) =>const SizedBox(),
+
+                                  placeholder: (_, __) =>  Center(
+                                      child: CircularProgressIndicator(color: Colors.black,)),
+                                ),
+                                // Image.asset("assets/images/demo.png", height: 80),
                               ),
                               addHeight(3),
-                              const Text(
-                                "Cat 1",
+                               Text(
+                                 cateListData.category.toString(),
                                 textAlign: TextAlign.center,
                                 maxLines: 2,
-                                style: TextStyle(fontSize: 13),
+                                style: Theme.of(context).textTheme.titleSmall,
                               ),
                             ],
                           ),
@@ -81,153 +135,14 @@ bool addButtonCliked = false;
                       ),
                     );
                   },
-                  childCount: 6,
+                  childCount: allCategoryModel!.categories!.length,
                 ),
               ),
             ),
-            SliverToBoxAdapter(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  addHeight(14),
-                  Text("Products", style: Theme.of(context).textTheme.titleMedium),
-                  addHeight(5),
-                ],
-              ),
-            ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                  return Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                    margin: const EdgeInsets.symmetric(vertical: 5),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade100),
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          offset: const Offset(1, 1),
-                          spreadRadius: 1,
-                          blurRadius: 2,
-                          color: Colors.black.withOpacity(0.10),
-                        )
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Image.asset(
-                              "assets/images/dmeo.png",
-                              width: 90,
-                              fit: BoxFit.fitHeight,
-                            ),
-                            const SizedBox(width: 20),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Narjo collection of accessories..",
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: Theme.of(context).textTheme.titleMedium,
-                                  ),
-                                  addHeight(3),
-                                  Text("ABC-12345-S-BL",
-                                      style: Theme.of(context).textTheme.bodySmall),
-                                  addHeight(4),
-                                  Text(
-                                    "₹888",
-                                    style: Theme.of(context).textTheme.titleMedium,
-                                  ),
-                                  addHeight(4),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                  Row(
-                                  children: [
-                                  RoundedIconBtn(
-                                  icon: Icons.remove,
-                                    press: () {
-                                      decreaseCounter();
-                                    },
-                                  ),
-                                  addWidth(8),
-                                  Text(counter.toString()),
-                                    addWidth(8),
-                                  RoundedIconBtn(
-                                    icon: Icons.add,
-                                    press: () {
-                                      setState(() {
-                                        increaseCounter();
-                                      });
-                                    },
-                                  ),
-                                ],
-                              ),
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                              GestureDetector(
-                                                onTap: () {
-                                                  setState(() {
-                                                    addButtonCliked = true;
-                                                  });
-                                                },
-                                                child: Container(
-                                                  padding: const EdgeInsets.symmetric(
-                                                      horizontal: 6, vertical: 6),
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                    BorderRadius.circular(5),
-                                                    color: Colors.black,
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        offset: const Offset(1, 1),
-                                                        spreadRadius: 1,
-                                                        blurRadius: 2,
-                                                        color:
-                                                        Colors.black.withOpacity(
-                                                            0.10),
-                                                      )
-                                                    ],
-                                                  ),
-                                                  child: const Text(
-                                                    "ADD TO ORDER",
-                                                    style: TextStyle(
-                                                        fontSize: 10,
-                                                        color: Colors.white),
-                                                  ),
-                                                ),
-                                              )
 
-
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                },
-                childCount: 30,
-              ),
-            ),
           ],
         ),
-      )
+      ):Center(child: threeArchedCircle(color: AppTextColor.themeColor, size: 30))
     );
   }
 }

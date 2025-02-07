@@ -1,15 +1,13 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:oms_app/resuources/constants.dart';
+import 'package:oms_app/resuources/app_colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'Homepage.dart';
-import 'chat_uaer.dart';
-import 'custom_bottom_bar.dart';
 import 'login_flow/login_page.dart';
-import 'manage_stocks/stocks_info_page.dart';
+import 'new_bottom_appbar.dart';
 
 class Splash extends StatefulWidget {
   static var splash = "/splash";
@@ -21,19 +19,29 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
 
+  getUserInfo() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+   var data = pref.getString("user_info");
+   log("USER DETAILS ${data.toString()}");
+   if(data != null){
+     Timer(const Duration(seconds: 3 ), ()async{
+       // Get.offAll(()=> const CustomBar());
+       Get.offAll(()=> const MinimalExample(initialIndex: 0,));
+     });
+   }else{
+     Get.offAll(()=>   LoginPage());
+   }
+  }
+
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3 ), ()async{
-      // Get.off(()=> UserSelectionScreen());
-      Get.off(()=>   LoginPage());
-      // Get.off(()=> CustomBar());
-    });
+    getUserInfo();
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTextColor.primaryColor ,
+      backgroundColor: AppTextColor.themeColor ,
       body: Center(child: Image.asset("assets/images/oms_new_logo.png")),
     );
   }

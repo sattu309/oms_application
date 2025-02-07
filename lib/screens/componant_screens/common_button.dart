@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:oms_app/resuources/constants.dart';
+import 'package:oms_app/resuources/app_colors.dart';
 
 class CommonButtonBlue extends StatelessWidget {
   final String title;
   final VoidCallback? onPressed;
 
-  const CommonButtonBlue({Key? key, required this.title, this.onPressed})
+  const CommonButtonBlue({Key? key, required this.title, required this.onPressed,})
       : super(key: key);
 
   @override
@@ -13,22 +13,22 @@ class CommonButtonBlue extends StatelessWidget {
     return
 
       Container(
+        height: 40,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
-          color: AppTextColor.primaryColor
+          color: AppTextColor.themeColor
         ),
         child:
         ElevatedButton(
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
               // minimumSize: 79,
-              backgroundColor: AppTextColor.primaryColor,
+              backgroundColor: AppTextColor.themeColor,
               // backgroundColor: Colors.red,
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50), // <-- Radius
               ),
-              // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

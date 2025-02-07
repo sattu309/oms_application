@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'OMS',
       theme: AppTheme.lightTheme(context),
       initialRoute: Splash.splash,
-     routes: routes,
+      routes: routes,
     );
   }
 }

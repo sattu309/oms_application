@@ -1,10 +1,9 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 
 void showSnackBarView(
     {required BuildContext context, required String message,  required Color backGroundColor}) {
   SnackBar snackBarContent = SnackBar(
-    duration: Duration(seconds: 5),
+    duration: const Duration(seconds: 2),
     content: Text(
       message,
       textAlign: TextAlign.center,

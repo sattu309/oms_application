@@ -1,4 +1,4 @@
-package com.example.oms_app
+package com.oms.omsapp
 
 import io.flutter.embedding.android.FlutterActivity
 

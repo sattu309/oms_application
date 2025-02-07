@@ -1,15 +1,14 @@
+import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:oms_app/resuources/constants.dart';
+import 'package:oms_app/resuources/app_colors.dart';
 import 'package:oms_app/screens/componant_screens/add_height_widtth.dart';
-
-import '../../resuources/custom_loader.dart';
+import '../../repository/login_repo.dart';
 import '../componant_screens/common_button.dart';
 import '../componant_screens/common_textfields.dart';
-import '../custom_bottom_bar.dart';
+import 'otp_screen.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -20,15 +19,17 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
-  final emailController= TextEditingController();
-  final passwordController= TextEditingController();
+  final phoneController= TextEditingController();
+  RxString errorText = "".obs;
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return
       Scaffold(
-      backgroundColor: AppTextColor.primaryColor,
+      backgroundColor: AppTextColor.themeColor,
       body:
       SingleChildScrollView(
         child: Column(
@@ -38,8 +39,8 @@ class _LoginPageState extends State<LoginPage> {
             Container(
               height: height * .42,
               width: width*.7,
-              decoration: BoxDecoration(
-                color: AppTextColor.primaryColor,
+              decoration: const BoxDecoration(
+                color: AppTextColor.themeColor,
                 image: DecorationImage(
                   image: AssetImage("assets/images/oms_new_logo.png"),
                   fit: BoxFit.fitWidth,
@@ -72,59 +73,66 @@ class _LoginPageState extends State<LoginPage> {
                         addHeight(15),
                         Text(
                           "Welcome",
-                          style: Theme.of(context).textTheme.titleLarge,
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(color: AppTextColor.themeColor),
                         ),
                         Text(
                           "Please login to your account",
-                          style: Theme.of(context).textTheme.bodyMedium,
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppTextColor.greyColor),
                         ),
                         addHeight(20),
                         CommonTextFieldWidget(
-                          controller: emailController,
-                          hint: "Username",
+                          keyboardType: TextInputType.number,
+                          length: 10,
+                          controller: phoneController,
+                          hint: "Mobile number",
                           prefix: Icon(
-                            Icons.person,
+                            Icons.phone_android,
                             color: AppTextColor.greyColor,
                           ),
-                        ),
-                        addHeight(15),
-                        CommonTextFieldWidget(
-                          controller: passwordController,
-                          hint: "Password",
-                          prefix: Icon(
-                            Icons.lock,
-                            color: AppTextColor.greyColor,
-                          ),
-                          suffix: Icon(
-                            Icons.visibility,
-                            color: AppTextColor.greyColor,
-                          ),
-                        ),
-                        addHeight(40),
-                         CommonButtonBlue( title: 'Sign In',onPressed: (){
-                           // Navigator.push(
-                           //   context,
-                           //   MaterialPageRoute(builder: (context) => const AppLoader()),
-                           // );
-                           // threeArchedCircle(color: Colors.black, size: 80,);
-                           Get.off(()=> CustomBar());
+                          validator: MultiValidator([
+                            RequiredValidator(
+                                errorText: 'Mobile Number is Required'),
+                          ]),
 
-                        },),
-                        addHeight(20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Forgot Password?",
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            addWidth(7),
-                            const Text(
-                              "Contact Your Manager",
-                              style: TextStyle(color: AppTextColor.primaryColor,fontSize: 15,fontWeight: FontWeight.w500),
-                            ),
-                          ],
                         ),
+                      addHeight(40),
+                         CommonButtonBlue(
+                           title: 'Sign In',
+                           onPressed: () {
+                             if (formKey.currentState!.validate()) {
+                               setState(() {
+                                 isLoading = true;
+                               });
+
+                               createLogin(mobileNumber: phoneController.text, context: context).then((value) {
+                                 setState(() {
+                                   isLoading = false; // Stop the loader
+                                 });
+
+                                 if (value.success != null) {
+                                   Get.off(() => OtpScreen(mobileNumber: phoneController.text));
+                                 } else {
+                                   errorText.value = value.error ?? 'An unexpected error occurred';
+                                   log('Error Message: ${errorText.value}');
+                                 }
+                               }).catchError((e) {
+                                 // Handle unexpected exceptions
+                                 setState(() {
+                                   isLoading = false; // Stop the loader
+                                 });
+                                 log('Unexpected Error: $e');
+                               });
+                             }
+                           }
+                           ,),
+                        addHeight(20),
+
+                        isLoading == true ?
+                          const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.red,
+                            ),
+                          ):const SizedBox()
                       ],
                     ),
                   ),

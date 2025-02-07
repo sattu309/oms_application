@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oms_app/resuources/constants.dart';
+import 'package:oms_app/resuources/app_colors.dart';
 import 'package:oms_app/screens/Homepage.dart';
 import 'package:oms_app/screens/componant_screens/add_height_widtth.dart';
 
@@ -45,7 +45,7 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 12,vertical: 12),
                         decoration: BoxDecoration(
-                          color: AppTextColor.blueColor,
+                          color: AppTextColor.themeColor,
                           shape: BoxShape.circle,
                         ),
                         child: Icon(Icons.mail_rounded,color: Colors.white,size: 20,),
@@ -59,7 +59,7 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 12,vertical: 12),
                         decoration: BoxDecoration(
-                          color: AppTextColor.blueColor,
+                          color: AppTextColor.themeColor,
                           shape: BoxShape.circle,
 
                         ),
@@ -79,7 +79,7 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
                           padding: EdgeInsets.symmetric(horizontal: 12,vertical: 12),
 
                           decoration: BoxDecoration(
-                            color: AppTextColor.blueColor,
+                            color: AppTextColor.themeColor,
                             shape: BoxShape.circle,
                           ),
                           child: Icon(Icons.chat_bubble,color: Colors.white,size: 20,),
@@ -116,7 +116,7 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
                       decoration: BoxDecoration(
-                        color: AppTextColor.blueColor,
+                        color: AppTextColor.themeColor,
                         shape: BoxShape.circle,
                       ),
                       child: Icon(Icons.article,color: Colors.white,size: 20,),

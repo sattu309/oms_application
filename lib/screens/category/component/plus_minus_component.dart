@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:oms_app/resuources/constants.dart';
 
 class RoundedIconBtn extends StatelessWidget {
   const RoundedIconBtn({
@@ -17,8 +16,8 @@ class RoundedIconBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return
       Container(
-        height: 24,
-        width: 24,
+        height: 20,
+        width: 20,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           // color: Colors.white,

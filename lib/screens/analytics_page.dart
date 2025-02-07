@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:oms_app/resuources/constants.dart';
+import 'package:oms_app/resuources/app_colors.dart';
 import 'package:oms_app/resuources/common_appbar.dart';
-import 'package:oms_app/screens/manage_stocks/stocks_info_page.dart';
+
+import 'componant_screens/add_height_widtth.dart';
+import 'customers/add_customers.dart';
+import 'customers/all_customers_list.dart';
 
 class AnalyticsPage extends StatefulWidget {
   const AnalyticsPage({super.key});
@@ -16,7 +19,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> with TickerProviderStateM
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(length: 2, vsync: this);
   }
   @override
   void dispose() {
@@ -26,8 +29,24 @@ class _AnalyticsPageState extends State<AnalyticsPage> with TickerProviderStateM
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: backAppBar1("Analytics", context),
-      body: Column(
+      appBar: AppBar(
+        backgroundColor: AppTextColor.themeColor,
+        automaticallyImplyLeading: false,
+        title:GestureDetector(
+          onTap: (){
+            Navigator.pop(context);
+          },
+          child: Row(
+            children: [
+              const Icon(Icons.arrow_back,color: Colors.white,),
+              addWidth(7),
+              Text("CUSTOMER DETAILS",style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.white),),
+            ],
+          ),
+        ),
+      ),
+      body:
+      Column(
         children: [
           // const SizedBox(height: 5,),
           Stack(
@@ -49,19 +68,16 @@ class _AnalyticsPageState extends State<AnalyticsPage> with TickerProviderStateM
                 unselectedLabelColor: const Color(0xFF9B9B9B),
                 indicator: const UnderlineTabIndicator(
                   borderSide: BorderSide(
-                    width: 2.0,
+                    width: 3.0,
                     color: AppTextColor.primaryColor,
                   ),
                 ),
                 tabs: const [
                   Tab(
-                    text: '   Today   ',
+                    text: '  CUSTOMER   ',
                   ),
                   Tab(
-                    text: 'Weekly  ',
-                  ),
-                  Tab(
-                    text: '  Monthly  ',
+                    text: 'ADD ',
                   ),
                 ],
               ),
@@ -73,9 +89,8 @@ class _AnalyticsPageState extends State<AnalyticsPage> with TickerProviderStateM
                 physics: const BouncingScrollPhysics(),
                 controller: tabController,
                 children: const [
-                 ManageStocksScreen(),
-                 ManageStocksScreen(),
-                 ManageStocksScreen()
+                  AllCustomersList(),
+                  // AddCustomer(),
                 ]),
           ),
         ],

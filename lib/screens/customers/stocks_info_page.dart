@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:oms_app/resuources/constants.dart';
+import 'package:oms_app/resuources/app_colors.dart';
 import 'package:oms_app/screens/dashboard_screen.dart';
 
 import '../login_flow/otp_screen.dart';
-import 'issued_stock_details.dart';
+import 'add_customers.dart';
 
 class ManageStocksScreen extends StatelessWidget {
   const ManageStocksScreen({super.key});
@@ -19,7 +19,7 @@ class ManageStocksScreen extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
         child: ListTile(
-          leading: Icon(icon, color: AppTextColor.blueColor),
+          leading: Icon(icon, color: AppTextColor.themeColor),
           title: Text(
             title,
             style: const TextStyle(fontWeight: FontWeight.bold),
@@ -28,7 +28,7 @@ class ManageStocksScreen extends StatelessWidget {
           trailing: Container(
             padding: EdgeInsets.symmetric(horizontal: 4,vertical: 3),
               decoration: BoxDecoration(
-                color: AppTextColor.blueColor,
+                color: AppTextColor.themeColor,
                 shape: BoxShape.circle
               ),
               child: const Icon(Icons.arrow_forward, color: Colors.white,size: 17,)),
@@ -72,7 +72,7 @@ class ManageStocksScreen extends StatelessWidget {
                       description: "Create records for stock sent out from the warehouse",
                       onTap: () {
                         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-                          return const IssuedStockDetails();
+                          return AddCustomer(update: () {  },);
                         }));
                       },
                     ),
@@ -82,9 +82,9 @@ class ManageStocksScreen extends StatelessWidget {
                       description: "Create records for the stock returned to the warehouse",
                       onTap: () {
 
-                        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-                          return const OtpScreen();
-                        }));
+                        // Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                        //   return const OtpScreen();
+                        // }));
                       },
                     ),
                     buildStockOption(

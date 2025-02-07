@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oms_app/resuources/constants.dart';
+import 'package:oms_app/resuources/app_colors.dart';
 
 class AppTheme {
   static ThemeData lightTheme(BuildContext context) {
@@ -10,14 +10,14 @@ class AppTheme {
       appBarTheme: const AppBarTheme(
           color: Colors.white,
           elevation: 0,
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: IconThemeData(color: Colors.white),
           titleTextStyle: TextStyle(color: Colors.black)),
       textTheme: TextTheme(
         bodyLarge: const TextStyle(color: Colors.black,fontSize: 18),
-        bodyMedium: const TextStyle(color: Colors.black,),
+        bodyMedium: const TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.w500),
         bodySmall:  TextStyle(color: Colors.grey.shade600,fontSize: 12),
-        titleSmall: const TextStyle(color: AppTextColor.titleColor,fontSize: 13,fontWeight: FontWeight.w600),
-        titleMedium: const TextStyle(color: AppTextColor.titleColor,fontSize: 14,fontWeight: FontWeight.w500),
+        titleSmall: const TextStyle(color: AppTextColor.titleColor,fontSize: 13,fontWeight: FontWeight.w500),
+        titleMedium: const TextStyle(color: AppTextColor.titleColor,fontSize: 17,fontWeight: FontWeight.w500),
         headlineMedium: const TextStyle(color: Colors.black),
       ),
       inputDecorationTheme: const InputDecorationTheme(
