@@ -32,7 +32,7 @@ Future<RequestOtpModel> createLogin(
     return RequestOtpModel.fromJson(json.decode(response.body));
   } else {
     final Map<String, dynamic> errorData = jsonDecode(response.body);
-    showSnackBarView(context: context, message: errorData['error'], backGroundColor: Colors.red);
+    showSnackBarView(context: context, message: errorData['error'], backGroundColor: Colors.black);
     throw Exception(response.body);
   }
 }
@@ -62,7 +62,7 @@ Future<VerifyOtpModel> otpVerifyRepo(
 
   } else {
     final Map<String, dynamic> errorData = jsonDecode(response.body);
-    showSnackBarView(context: context, message: errorData['error'], backGroundColor: Colors.red);
+    showSnackBarView(context: context, message: errorData['error'], backGroundColor: Colors.black);
     throw Exception(response.body);
   }
 }

@@ -11,6 +11,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../repository/login_repo.dart';
+import '../../resuources/custom_loader.dart';
 import '../new_bottom_appbar.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -144,7 +145,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         style: const TextStyle(
                             decoration: TextDecoration.underline,
                             fontSize: 15,
-                            color: Colors.red,
+                            color: Colors.white,
                             fontWeight: FontWeight.w400));
                   })
 
@@ -218,10 +219,8 @@ class _OtpScreenState extends State<OtpScreen> {
                   )),
             ),
               isLoading == true ?
-              const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.red,
-                ),
+               Center(
+                child: threeArchedCircle(color: Colors.white, size: 30),
               ):const SizedBox()
             ],
           ),

@@ -82,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
                       }),
 
                        Positioned(
-                          right: 110,
+                          right: 100,
                           top: 25,
                           child: IconButton(
                               onPressed: () {

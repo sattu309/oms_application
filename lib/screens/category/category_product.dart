@@ -63,23 +63,6 @@ class _CategoryProductsState extends State<CategoryProducts> {
     var height = MediaQuery.of(context).size.height;
     return
       Scaffold(
-        // appBar: AppBar(
-        //   title: Text(widget.categoryName),
-        //   actions:  [
-        //
-        //     Padding(
-        //       padding: EdgeInsets.all(15.0),
-        //       child: GestureDetector(
-        //           onTap: (){
-        //             Navigator.push(context, MaterialPageRoute(builder: (context){
-        //               return CartScreen();
-        //             }));
-        //           },
-        //           child
-        //               : const Icon(Icons.shopping_basket_rounded,color: Colors.black,)),
-        //     ),
-        //   ],
-        // ),
           body: subCategoryModel != null
               ? subCategoryModel!.products!.isNotEmpty
               ?
@@ -122,14 +105,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
                             border:Border(bottom: BorderSide(color: Colors.grey.shade200)),
                             borderRadius: BorderRadius.circular(5),
                             color: Colors.white,
-                            // boxShadow: [
-                            //   BoxShadow(
-                            //     offset: const Offset(1, 1),
-                            //     spreadRadius: 1,
-                            //     blurRadius: 2,
-                            //     color: Colors.black.withOpacity(0.10),
-                            //   )
-                            // ],
+
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:oms_app/resuources/app_colors.dart';
 import 'package:oms_app/screens/componant_screens/add_height_widtth.dart';
 import '../../repository/login_repo.dart';
+import '../../resuources/custom_loader.dart';
 import '../componant_screens/common_button.dart';
 import '../componant_screens/common_textfields.dart';
 import 'otp_screen.dart';
@@ -128,11 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                         addHeight(20),
 
                         isLoading == true ?
-                          const Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.red,
-                            ),
-                          ):const SizedBox()
+                        Center(child: threeArchedCircle(color: AppTextColor.themeColor, size: 30)):const SizedBox()
                       ],
                     ),
                   ),

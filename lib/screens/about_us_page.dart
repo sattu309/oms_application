@@ -8,6 +8,7 @@ import '../common_repo/common_api_repo.dart';
 import '../models/about_us_model.dart';
 import '../resuources/api_urls.dart';
 import '../resuources/app_colors.dart';
+import '../resuources/custom_loader.dart';
 import 'componant_screens/add_height_widtth.dart';
 
 class AboutUsPage extends StatefulWidget {
@@ -34,6 +35,8 @@ class _AboutUsPageState extends State<AboutUsPage> {
   }
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       // backgroundColor: Colors.transparent,
       appBar: AppBar(
@@ -62,6 +65,9 @@ class _AboutUsPageState extends State<AboutUsPage> {
           padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 6),
           child: Column(
             children: [
+
+              // Text("screen height: ${height}",style: TextStyle(color: Colors.black),),
+              // Text("screen width: ${width}",style: TextStyle(color: Colors.black)),
               ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: Image.asset("assets/images/banner.jpg")),
@@ -71,7 +77,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
             ],
           ),
         ),
-      ):Center(child: CircularProgressIndicator(color: AppTextColor.themeColor,),),
+      ):Center(child: threeArchedCircle(color: AppTextColor.themeColor, size: 30))
     );
   }
 }

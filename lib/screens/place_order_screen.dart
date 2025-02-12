@@ -382,11 +382,7 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
 
-                        GestureDetector(
-                            onTap: (){
-                              print(cartController.cartTotal.toInt());
-                            },
-                            child: Text("Hello",style: TextStyle(color: Colors.black),)),
+
                   CommonButtonBlue(title: "Place Order",
                     onPressed: () async {
                     final totalData =  cartController.calculateTotal.value.toInt() == 0.0

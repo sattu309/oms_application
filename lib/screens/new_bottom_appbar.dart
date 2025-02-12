@@ -129,29 +129,6 @@ class _MinimalExampleState extends State<MinimalExample> {
               PersistentTabView(
                 controller: persistentTabController,
                 tabs: tabs(),
-                // onTabChanged: (index) {
-                //   controller.currentIndex.value = index;
-                //   switch (index) {
-                //     case 0:
-                //       Navigator.popUntil(context, (route) => route.isFirst);
-                //       controller.onItemTap(0);
-                //       break;
-                //     case 1:
-                //       Navigator.of(context).popUntil((route) => route.isFirst);
-                //       break;
-                //     case 2:
-                //       cartController.getCartDataLocally();
-                //       Navigator.of(context).popUntil((route) => route.isFirst);
-                //       break;
-                //     case 3:
-                //       cartController.getCartDataLocally();
-                //       Navigator.of(context).popUntil((route) => route.isFirst);
-                //       break;
-                //     case 4:
-                //       Navigator.of(context).popUntil((route) => route.isFirst);
-                //       break;
-                //   }
-                // },
                 onTabChanged: (index) {
                   controller.currentIndex.value = index;
                   print("INDEX: ${controller.currentIndex.value}");
